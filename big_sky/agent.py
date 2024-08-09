@@ -1,9 +1,7 @@
 from typing import TypedDict, Literal
-
 from langgraph.graph import StateGraph, END
-from big_sky.utils.nodes import call_model, should_continue, tool_node
+from big_sky.utils.nodes import call_model, should_continue, tool_node, update_state_node
 from big_sky.utils.state import AgentState
-
 
 # Define the config
 class GraphConfig(TypedDict):
@@ -19,6 +17,7 @@ workflow = StateGraph(AgentState, config_schema=GraphConfig)
 # Define the two nodes we will cycle between
 workflow.add_node("agent", call_model)
 workflow.add_node("action", tool_node)
+workflow.add_node("tool_artifacts_to_state", update_state_node)
 
 # Set the entrypoint as `agent`
 # This means that this node is the first one called
@@ -47,7 +46,8 @@ workflow.add_conditional_edges(
 
 # We now add a normal edge from `tools` to `agent`.
 # This means that after `tools` is called, `agent` node is called next.
-workflow.add_edge("action", "agent")
+workflow.add_edge("action", "tool_artifacts_to_state")
+workflow.add_edge("tool_artifacts_to_state", "agent")
 
 # Finally, we compile it!
 # This compiles it into a LangChain Runnable,

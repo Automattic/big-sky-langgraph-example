@@ -22,3 +22,9 @@ micromamba create python=3.10.13 -y -n langgraph -c conda-forge
 micromamba activate langgraph
 pip install -r my_agent/requirements.txt
 ```
+
+### Running locally
+
+```bash
+python local.py
+```

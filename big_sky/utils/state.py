@@ -32,17 +32,20 @@ SiteTopic = Literal[
     "sports",
 ]
 
-class Site(TypedDict):
-    type: SiteType
-    title: str
-    description: str
-    location: str
-    topic: SiteTopic
 
-class Page(TypedDict):
-    title: str
-    description: str
-    content: str
+class Site(TypedDict, total=False):
+    type: Optional[SiteType]
+    title: Optional[str]
+    description: Optional[str]
+    location: Optional[str]
+    topic: Optional[SiteTopic]
+
+
+class Page(TypedDict, total=False):
+    title: Optional[str]
+    description: Optional[str]
+    content: Optional[str]
+
 
 class AgentState(TypedDict):
     messages: Annotated[Sequence[BaseMessage], add_messages]
