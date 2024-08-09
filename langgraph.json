@@ -1,7 +1,11 @@
 {
-  "dependencies": ["./my_agent"],
+  "python_version": "3.11",
+  "dockerfile_lines": [],
+  "dependencies": [
+    "./big_sky"
+  ],
   "graphs": {
-    "agent": "./my_agent/agent.py:graph"
+    "agent": "./big_sky/agent.py:graph"
   },
   "env": ".env"
 }
